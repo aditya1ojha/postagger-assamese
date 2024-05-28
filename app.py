@@ -8,40 +8,16 @@ nltk.download('punkt')
 
 app = Flask(__name__)
 
-
 data = pd.read_csv('postagging-aahar-3.csv', encoding='utf-8')
-data = data.fillna(method="ffill") # Deal with N/A
+data = data.fillna(method="ffill")  # Deal with N/A
 
-tags = list(set(data["Pos"].values)) # Read POS value
+tags = list(set(data["Pos"].values))  # Read POS value
 words = list(set(data["Word"].values))
 
 # Load word to id mapping
 word2id = {w: i for i, w in enumerate(words)}  # Load your word to id mapping here
 tag2id = {t: i for i, t in enumerate(tags)}
 
-# # Custom activation function
-# @tensorflow.keras.saving.register_keras_serializable(package="my_package", name="custom_activation")
-# def custom_activation(x, axis=-1):
-#     # Custom activation function implementation
-#     pass
-
-# # Define custom objects dictionary
-# custom_objects = {'custom_activation': custom_activation}
-
-# # Define the file path where the config is saved
-# file_path = "C:\\Users\\Admin\\Downloads\\test_app\\model_config.json"
-
-# Load the model configuration from JSON
-# with open(file_path, "r") as json_file:
-#     config_json = json_file.read()
-
-# Parse the JSON string to obtain the configuration dictionary
-# config = json.loads(config_json)
-
-
-# Load the model within the custom_object_scope
-# with custom_object_scope(custom_objects):
-#     model = model_from_config(config)
 config={'name': 'model',
  'trainable': True,
  'layers': [{'module': 'keras.layers',
@@ -173,20 +149,17 @@ model = tensorflow.keras.models.Model.from_config(config)
 # Load the model weights
 model.load_weights("your_model_file.h5")
 
-# Define word-to-id and tag mappings globally
-# You need to define word2id and tags here
-
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('index.html')
-
-@app.route('/tag', methods=['POST'])
-def tag_sentence():
+    tagged_sentence = None
+    sentence = ""
     if request.method == 'POST':
         user_input = request.form['sentence']
-        sentence = nltk.word_tokenize(user_input)
-        X_Samp = [[word2id.get(word, len(words)-1) for word in sentence]]  # No padding
+        sentence = user_input
+        tokenized_sentence = nltk.word_tokenize(user_input)
+        X_Samp = [[word2id.get(word, len(words) - 1) for word in tokenized_sentence]]  # No padding
         p = model.predict(np.array(X_Samp))  # Predict on it
         p = np.argmax(p, axis=-1)  # Map softmax back to a POS index
-        tagged_sentence = [(word, tags[pred]) for word, pred in zip(sentence, p[0])]
-        return render_template('tagged.html', sentence=user_input, tagged_sentence=tagged_sentence)
+        tagged_sentence = [(word, tags[pred]) for word, pred in zip(tokenized_sentence, p[0])]
+    
+    return render_template('index.html', sentence=sentence, tagged_sentence=tagged_sentence)

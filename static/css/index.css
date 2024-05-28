@@ -57,9 +57,20 @@ body {
     padding: 20px;
     display: flex;
     align-items: center;
+    flex-direction: column;
     transform: translateX(100%); /* Initially shift right by 100% */
     animation: slideInRight 1s ease forwards; /* Apply slide-in animation */
 }
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%); /* Start from outside the viewport */
+    }
+    to {
+        transform: translateX(0); /* End at original position */
+    }
+}
+
 .google-icon {
     z-index: 2;
     position: fixed;
@@ -80,14 +91,7 @@ body {
 .google-icon:active {
     transform: scale(0.9); /* Shrink the icon when clicked */
 }
-@keyframes slideInRight {
-    from {
-        transform: translateX(100%); /* Start from outside the viewport */
-    }
-    to {
-        transform: translateX(0); /* End at original position */
-    }
-}
+
 footer {
     position: fixed;
     bottom: 0;
@@ -98,6 +102,7 @@ footer {
     font-size: 12px;
     padding: 4px 0;
 }
+
 form {
     max-width: 500px; /* Adjust max-width as needed */
     width: 100%; /* Ensure the form takes up the full width */
@@ -164,3 +169,33 @@ input[type="submit"]:hover {
     }
 }
 
+/* New styles for the results section */
+.results {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.results h2 {
+    margin-top: 0;
+    font-family: 'Courier New', Courier, monospace;
+    color: #002b36;
+}
+
+.tagged-word {
+    display: inline-block;
+    margin: 5px 10px;
+    padding: 5px 10px;
+    background-color: #e3f2fd;
+    border-radius: 3px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #002b36;
+}
+
+.tagged-word strong {
+    color: #007BFF;
+}

@@ -1,0 +1,166 @@
+/* style.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent horizontal scrollbar */
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden; /* Prevent horizontal scrollbar */
+}
+
+.left-half {
+    flex: 1;
+    background-color: #002b36;
+    color: #cac7c7;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the left */
+    transform: translateX(-100%); /* Initially shift left by 100% */
+    animation: slideInLeft 1s ease forwards; /* Apply slide-in animation */
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%); /* Start from outside the viewport */
+    }
+    to {
+        transform: translateX(0); /* End at original position */
+    }
+}
+
+.title {
+    color: #cac7c7;
+    font-size: 4em; /* Increase font size */
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+    margin-bottom: 20px; /* Remove default margin */
+}
+
+.subtitle {
+    color: #9b9696;
+    font-size: 2em; /* Smaller font size */
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0; /* Remove default margin */
+}
+
+.right-half {
+    flex: 1;
+    background-color: #cac7c7;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    transform: translateX(100%); /* Initially shift right by 100% */
+    animation: slideInRight 1s ease forwards; /* Apply slide-in animation */
+}
+.google-icon {
+    z-index: 2;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out; /* Add transition effect */
+}
+
+/* Add hover effect */
+.google-icon:hover {
+    transform: scale(1.1); /* Enlarge the icon on hover */
+}
+
+/* Add click effect */
+.google-icon:active {
+    transform: scale(0.9); /* Shrink the icon when clicked */
+}
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%); /* Start from outside the viewport */
+    }
+    to {
+        transform: translateX(0); /* End at original position */
+    }
+}
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #002b36;
+    color: #cac7c7;
+    text-align: center;
+    font-size: 12px;
+    padding: 4px 0;
+}
+form {
+    max-width: 500px; /* Adjust max-width as needed */
+    width: 100%; /* Ensure the form takes up the full width */
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: box-shadow 0.3s ease; /* Add transition for smooth effect */
+}
+
+/* Add hover effect */
+form:hover {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3); /* Change the box-shadow on hover */
+}
+
+.label {
+    display: block;
+    margin-bottom: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #555;
+}
+
+input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #002b36;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #002b36;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #002b36;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #0c4250;
+}
+
+@media (max-width: 600px) {
+    .left-half {
+        padding: 10px;
+    }
+    .title {
+        font-size: 2.5em; /* Adjust font size for smaller screens */
+    }
+    .subtitle {
+        font-size: 1em; /* Adjust font size for smaller screens */
+    }
+}
+

@@ -1,0 +1,63 @@
+/* style.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #002b36; /* Set body background color */
+    color: #fff; /* Set text color */
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.heading {
+    text-align: center;
+    font-size: 48px; /* Adjust font size for heading */
+    color: #cac7c7;
+}
+
+.content {
+    margin-top: 50px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+strong {
+    color: #00adb5; /* Set color for strong text */
+    font-size: 30px;
+}
+.google-icon {
+    z-index: 2;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out; /* Add transition effect */
+}
+
+/* Add hover effect */
+.google-icon:hover {
+    transform: scale(1.1); /* Enlarge the icon on hover */
+}
+
+/* Add click effect */
+.google-icon:active {
+    transform: scale(0.9); /* Shrink the icon when clicked */
+}
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #002b36;
+    color: #cac7c7;
+    text-align: center;
+    font-size: 12px;
+    padding: 4px 0;
+}

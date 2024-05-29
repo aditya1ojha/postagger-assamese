@@ -1,4 +1,4 @@
-import tensorflow
+import tensorflow as tf
 from flask import Flask, render_template, request
 import nltk
 import numpy as np
@@ -102,10 +102,7 @@ config={'name': 'model',
       'activity_regularizer': None,
       'kernel_constraint': None,
       'recurrent_constraint': None,
-      'bias_constraint': None,
-      'dropout': 0.0,
-      'recurrent_dropout': 0.1,
-      'implementation': 1},
+      'bias_constraint': None},
      'registered_name': None},
     'merge_mode': 'concat'},
    'registered_name': None,
@@ -145,8 +142,9 @@ config={'name': 'model',
    'inbound_nodes': [[['bidirectional', 0, 0, {}]]]}],
  'input_layers': [['input_1', 0, 0]],
  'output_layers': [['time_distributed', 0, 0]]}
-model = tensorflow.keras.models.Model.from_config(config)
-# Load the model weights
+
+# Load the model globally
+model = tf.keras.models.Model.from_config(config)
 model.load_weights("your_model_file.h5")
 
 @app.route('/', methods=['GET', 'POST'])
@@ -158,7 +156,9 @@ def home():
         sentence = user_input
         tokenized_sentence = nltk.word_tokenize(user_input)
         X_Samp = [[word2id.get(word, len(words) - 1) for word in tokenized_sentence]]  # No padding
-        p = model.predict(np.array(X_Samp))  # Predict on it
+        X_Samp = np.array(X_Samp)
+        with tf.device('/cpu:0'):  # Run prediction on CPU to save memory
+            p = model.predict(X_Samp)  # Predict on it
         p = np.argmax(p, axis=-1)  # Map softmax back to a POS index
         tagged_sentence = [(word, tags[pred]) for word, pred in zip(tokenized_sentence, p[0])]
     
